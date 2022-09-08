@@ -32,6 +32,7 @@ import {
 import { autoHeightRef } from './auto-height';
 import { BBCode } from './BBCode';
 import { BeatmapInline, beatmapText } from './BeatmapInline';
+import WysiwygEditor from './components/WysiwygEditor';
 import type { FormSubmitHandler } from './dom-helpers';
 import { Form } from './dom-helpers';
 import Help from './Help';
@@ -1024,18 +1025,13 @@ function Description({
   };
 
   return editing ? (
-    <Form busyState={[busy, setBusy]} onSubmit={onSubmit}>
-      <div className='textarea-wrapper'>
-        <textarea name='description' defaultValue={text} ref={descriptionRef} />
-        <div className='description-buttons'>
-          <span>Use BBCode for formatting</span>
-          <button type='submit'>{busy ? 'Updating...' : 'Update'}</button>
-          <button type='button' onClick={() => setEditing(false)}>
-            Cancel
-          </button>
-        </div>
-      </div>
-    </Form>
+    <WysiwygEditor
+      editorName='description'
+      text={text}
+      refObject={descriptionRef}
+      setEditing={setEditing}
+      onSubmit={onSubmit}
+    />
   ) : (
     <p>
       {text == null ? (
